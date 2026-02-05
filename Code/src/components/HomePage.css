@@ -2,127 +2,292 @@
   display: flex;
   text-align: center;
   gap: 10px;
-  padding: 10px;
+  padding: 0;
   position: relative;
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .home-container {
-  margin-top: 0;
+  margin: 0;
   text-align: center;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: var(--secondary-bg);
   flex: 1;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-.login-logout-container {
-  text-align: center;
-  margin-bottom: 15px;
+/* Bingo Layout */
+.bingo-layout {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Board styling */
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* always 10 columns */
+  gap: clamp(4px, 0.8vh, 10px);
+  padding: clamp(8px, 1.5vh, 20px);
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+  overflow-y: auto; 
+  align-content: start;
+  box-sizing: border-box;
+}
+
+
+.board-placeholder {
+  grid-column: 1 / -1;
+  padding: 60px 20px;
+  color: var(--text-color);
+  opacity: 0.6;
+  font-size: 1.2rem;
+}
+
+/* Number tiles */
+.number-tile {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--tile-unselected);
+  color: var(--text-color);
+  font-size: clamp(0.8rem, 1.5vw, 2rem);
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  user-select: none;
+}
+
+.number-tile:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.number-tile.selected {
+  background-color: var(--tile-selected);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Number History Column */
+.number-history {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 150px;
+  padding: 20px;
+}
+
+.last-number-container {
   width: 100%;
 }
 
-/* Default button styling (inherits global vars) */
-.login-out-btn {
-  width: 90%;
+.last-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--tile-unselected);
+  color: var(--text-color);
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.last-number.main {
+  background-color: var(--tile-selected);
+  color: white;
+}
+
+.last-number.large {
+  width: 20vh;
+  height: 20vh;
+  font-size: 14vh;
+}
+
+.last-number.small {
+  width: 15vh;
+  height: 15vh;
+  font-size: 9vh;
+}
+
+.last-number.empty {
+  background-color: var(--tile-unselected);
+  color: var(--text-color);
+  opacity: 0.5;
+}
+
+.previous-numbers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Sidebar - always fixed and hidden by default */
+.sticky-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  position: fixed;
+  top: 10px;
+  right: 0;
+  height: calc(100vh - 20px);
+  background-color: var(--button-bg);
+  padding: 20px;
+  border-radius: 8px 0 0 8px;
+  box-shadow: -3px 0 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+  z-index: 999;
+  transform: translateX(100%);
+}
+
+/* Slide in */
+.sticky-sidebar.sidebar-visible {
+  transform: translateX(0);
+}
+
+/* Slide out */
+.sticky-sidebar.sidebar-hidden {
+  transform: translateX(100%);
+}
+
+/* Control panel styling */
+.sidebar-nav {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 15px;
+}
+
+.sidebar-nav h3 {
+  margin: 0 0 10px 0;
+  padding-bottom: 8px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Number Selector */
+.number-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.number-selector label {
+  color: var(--button-text);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.number-input-group {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.number-input {
+  flex: 1;
+  padding: 8px;
   font-size: 16px;
+  text-align: center;
+  border: 2px solid var(--button-bg);
+  border-radius: 5px;
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.number-input:focus {
+  outline: none;
+  border-color: var(--tile-selected);
+}
+
+/* Remove number input arrows */
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input {
+  -moz-appearance: textfield;
+}
+
+.control-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   background-color: var(--button-bg);
   color: var(--button-text);
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition: background-color 0.3s ease, transform 0.1s ease, filter 0.3s ease;
 }
 
-/* Hover effect */
-.login-out-btn:hover {
-  filter: brightness(1.1);
+.control-btn:hover:not(:disabled) {
+  filter: brightness(1.2);
   transform: scale(1.03);
 }
 
-/* Logout button variant */
-.login-out-btn.logout {
-  background-color: #e53935; /* red shade */
-  color: #fff;
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.login-out-btn.logout:hover {
-  background-color: #c62828;
+.control-btn.small-btn {
+  width: 40px;
+  padding: 8px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-/* sticky sidebar */
-.sticky-sidebar {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  position: sticky;
-  top: 5px;
-  align-self: flex-start;
-  height: calc(100vh - 40px);
-  background-color: var(--button-bg);
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+.load-btn {
+  background-color: #4CAF50;
+  color: white;
 }
 
-.sticky-sidebar a {
-  text-decoration: none;
-  color: var(--button-text);
-  font-weight: 500;
-  display: block;
-  padding: 6px 8px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, filter 0.3s ease;
+.load-btn:hover {
+  background-color: #45a049;
 }
 
-.sticky-sidebar a:hover {
-  filter: brightness(1.1);
-  background-color: rgba(255, 255, 255, 0.1);
+.reset-btn {
+  background-color: #ff6b6b;
+  color: white;
 }
 
-/* Fixed navigation header */
-.sidebar-nav {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+.reset-btn:hover:not(:disabled) {
+  background-color: #ff5252;
 }
 
-.sidebar-nav a {
-  text-decoration: none;
-  color: var(--button-text);
-  background-color: var(--button-bg);
-  padding: 8px 12px;
-  border-radius: 5px;
-  transition: filter 0.3s ease, transform 0.1s ease;
-}
-
-.sidebar-nav a:hover {
-  filter: brightness(1.1);
-  transform: scale(1.03);
-}
-
-/* Scrollable content area */
-.sidebar-scroll {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 15px;
-  padding-bottom: 30px;
-}
-
-.sidebar-divider {
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 1px 0;
-}
-
+/* Hamburger toggle button - always visible */
 .sidebar-toggle-btn {
-  display: none;
+  display: block;
   position: fixed;
   top: 10px;
   right: 10px;
@@ -158,101 +323,6 @@
   transform: scale(1.02);
 }
 
-/* Profile section wrapper */
-.profile-section {
-  position: relative;
-  width: 160px;
-  margin: 0 auto 10px auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Profile image */
-.profile-section .profile-image {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto;
-}
-
-/* Edit icon on profile image */
-.profile-section .edit-icon {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  background-color: rgba(0,0,0,0.6);
-  border-radius: 50%;
-  padding: 4px;
-}
-
-.profile-section:hover .edit-icon {
-  opacity: 1;
-}
-
-.interests-list {
-  list-style-type: disc;
-  padding-left: 20px;
-  margin: 10px 0;
-  color: var(--text-color);
-  font-size: 1rem;
-}
-
-.interests-list li {
-  margin-bottom: 6px;
-}
-
-.body-list {
-  list-style-type: none;
-  padding-left: 0px;
-  margin: 10px 0;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--text-color);
-  font-size: 1rem;
-}
-
-.body-list li {
-  margin-bottom: 6px;
-}
-
-.uni-marks {
-	display: flex;
-	gap: 20px;
-	width: 100%;
-}
-
-.column {
-	flex: 1;
-}
-
-.left {
-	margin-left: 10%;
-}
-
-.right {
-	margin-right: 10%;
-}
-
-#education p {
-  margin: 5px 0;
-  line-height: 1.4;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#experience p {
-  margin: 5px 0;
-  line-height: 1.4;
-}
-
 @media (max-width: 1000px) {
   .main-content {
     margin-top: 0;
@@ -260,123 +330,30 @@
   }
 
   .sticky-sidebar {
-    position: fixed;
-    top: 10px;
-    right: 0;
     width: 220px;
-    height: 100vh;
-    background-color: var(--button-bg);
-    padding: 20px;
-    box-shadow: -3px 0 6px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
-    z-index: 999;
-
-    /* Start hidden offscreen */
-    transform: translateX(100%);
   }
 
-  /* Slide in */
-  .sticky-sidebar.sidebar-visible {
-    transform: translateX(0);
+  .bingo-layout {
+    flex-direction: column;
   }
 
-  /* Slide out */
-  .sticky-sidebar.sidebar-hidden {
-    transform: translateX(100%);
+  .number-history {
+    flex-direction: row;
+    justify-content: center;
+    min-width: unset;
   }
 
-  /* Show toggle button */
-  .sidebar-toggle-btn {
-    display: block;
+  .previous-numbers-container {
+    flex-direction: row;
   }
 
-  .uni-marks {
-	  flex-direction: column;
+  .board {
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    padding: 10px;
   }
 
-  .column {
-	  margin: 0px;	
+  .number-tile {
+    font-size: 1.2rem;
   }
-
-  .doc-btn {
-	  width: 80% !important;
-  }
-}
-
-/* Editable sections & edit icon */
-.editable-section {
-  position: relative;
-  padding-right: 24px; /* space for edit icon */
-}
-
-.edit-icon {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  filter: invert(1); /* Ensures visibility on dark background */
-}
-
-.editable-section:hover .edit-icon,
-.profile-section:hover .edit-icon {
-  opacity: 1;
-}
-
-textarea {
-  width: 100%;
-  min-height: 80px;
-  font-size: 14px;
-  padding: 6px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
-
-/* Logout button red styling */
-.login-out-btn.logout {
-  background-color: #d9534f;
-  color: white;
-}
-
-.login-out-btn.logout:hover {
-  background-color: #c9302c;
-}
-
-.experience ul {
-	/*columns: auto;*/
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	column-gap: 30px;
-	width: 100%;
-	list-style-position: inside;
-	padding-left: 0px;
-}
-
-.experience ul li {
-	break-inside: avoid;
-	margin-bottom: 5px;
-}
-
-.projects ul {
-	list-style-position: inside;
-	padding-left: 0px;
-}
-
-.projects ul li {
-	margin-bottom: 5px;
-}
-
-.project-link:hover h3{
-	color: blue;
-	text-decoration: underline;
-}
-
-.doc-btn {
-	margin: 10px;
-	width: 40%;
 }

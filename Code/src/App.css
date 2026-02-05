@@ -10,9 +10,11 @@
   --heading-color: #fff;
   --button-bg: #444;
   --button-text: #fff;
+  --tile-unselected: #2c2c2c;
+  --tile-selected: #ff9800;
 }
 
-/* Light theme (explicitly set for clarity) */
+/* Light theme */
 html.light-mode,
 body.light-mode {
   --primary-bg: #007bff;
@@ -23,9 +25,11 @@ body.light-mode {
   --heading-color: #000;
   --button-bg: #007bff;
   --button-text: #fff;
+  --tile-unselected: #e0e0e0;
+  --tile-selected: #4CAF50;
 }
 
-/* Dark theme variables */
+/* Dark theme */
 html.dark-mode,
 body.dark-mode {
   --primary-bg: #222;
@@ -36,6 +40,8 @@ body.dark-mode {
   --heading-color: #fff;
   --button-bg: #444;
   --button-text: #fff;
+  --tile-unselected: #2c2c2c;
+  --tile-selected: #ff9800;
 }
 
 /* ==============================
