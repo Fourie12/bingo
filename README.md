@@ -62,7 +62,7 @@ Find it here: https://fourie12.github.io/bingo/
 ## Running the Project
 
 make install
-make dev-run
+make dev-start
 
 ------------------------------------------------------------------------
 
