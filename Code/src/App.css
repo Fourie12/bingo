@@ -27,6 +27,7 @@ body.light-mode {
   --button-text: #fff;
   --tile-unselected: #e0e0e0;
   --tile-selected: #4CAF50;
+  --tile-outline: #7B3F00;
 }
 
 /* Dark theme */
@@ -42,6 +43,8 @@ body.dark-mode {
   --button-text: #fff;
   --tile-unselected: #2c2c2c;
   --tile-selected: #00bcd4;
+  --tile-outline: #E07B39;
+  
 }
 
 /* ==============================
